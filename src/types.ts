@@ -129,3 +129,64 @@ export interface PopularCurrencies {
   FJD: 'Fijian Dollar';
   PGK: 'Papua New Guinean Kina';
 }
+
+// --- Crypto Types ---
+
+export interface CryptoConversionResult {
+  from: string;
+  to: string;
+  amount: number;
+  result: number;
+  rate: number;
+  timestamp: Date;
+  source: 'google' | 'coinpaprika' | 'cache';
+  conversionType: 'crypto-to-fiat' | 'fiat-to-crypto' | 'crypto-to-crypto';
+  metadata?: {
+    method?: string;
+    precision?: 'high' | 'standard';
+    marketCap?: number;
+    volume24h?: number;
+    change24h?: number;
+  };
+}
+
+export interface CryptoConversionOptions {
+  amount?: number;
+  timeout?: number;
+  source?: 'google' | 'coinpaprika' | 'auto';
+}
+
+export type CryptoCode = keyof PopularCryptocurrencies | (string & {});
+
+export interface PopularCryptocurrencies {
+  BTC: 'Bitcoin';
+  ETH: 'Ethereum';
+  SOL: 'Solana';
+  BNB: 'BNB';
+  XRP: 'XRP';
+  ADA: 'Cardano';
+  DOGE: 'Dogecoin';
+  AVAX: 'Avalanche';
+  DOT: 'Polkadot';
+  LINK: 'Chainlink';
+  MATIC: 'Polygon';
+  SHIB: 'Shiba Inu';
+  LTC: 'Litecoin';
+  UNI: 'Uniswap';
+  ATOM: 'Cosmos';
+  XLM: 'Stellar';
+  ALGO: 'Algorand';
+  NEAR: 'NEAR Protocol';
+  APT: 'Aptos';
+  SUI: 'Sui';
+  ARB: 'Arbitrum';
+  OP: 'Optimism';
+  FIL: 'Filecoin';
+  AAVE: 'Aave';
+  GRT: 'The Graph';
+  SAND: 'The Sandbox';
+  MANA: 'Decentraland';
+  AXS: 'Axie Infinity';
+  CRO: 'Cronos';
+  TRX: 'TRON';
+}

@@ -1,5 +1,7 @@
 export { CurrencyConverter, convertCurrency, defaultConverter } from './currencyConverter';
+export { CryptoConverter, convertCrypto, defaultCryptoConverter } from './cryptoConverter';
 export { GoogleCurrencyScraper } from './googleScraper';
+export { CoinPaprikaScraper } from './cryptoCoinPaprika';
 export * from './types';
 
 // Re-export popular currencies for convenience
@@ -69,7 +71,7 @@ export const POPULAR_CURRENCIES = {
   UYU: 'Uruguayan Peso',
   PEN: 'Peruvian Sol',
   XCD: 'East Caribbean Dollar',
-  XCG: 'Caribbean Guilder', // New 2026 standard for Curaçao/Sint Maarten
+  XCG: 'Caribbean Guilder',
 
   // --- Africa ---
   ZAR: 'South African Rand',
@@ -79,7 +81,7 @@ export const POPULAR_CURRENCIES = {
   GHS: 'Ghanaian Cedi',
   MAD: 'Moroccan Dirham',
   DZD: 'Algerian Dinar',
-  ZWG: 'Zimbabwe Gold', // The official 2026 successor to ZWL
+  ZWG: 'Zimbabwe Gold',
   ETB: 'Ethiopian Birr',
   TZS: 'Tanzanian Shilling',
   UGX: 'Ugandan Shilling',
@@ -93,7 +95,42 @@ export const POPULAR_CURRENCIES = {
   PGK: 'Papua New Guinean Kina',
 } as const;
 
-// Utility functions
+// Popular cryptocurrencies for convenience
+export const POPULAR_CRYPTOS = {
+  BTC: 'Bitcoin',
+  ETH: 'Ethereum',
+  SOL: 'Solana',
+  BNB: 'BNB',
+  XRP: 'XRP',
+  ADA: 'Cardano',
+  DOGE: 'Dogecoin',
+  AVAX: 'Avalanche',
+  DOT: 'Polkadot',
+  LINK: 'Chainlink',
+  MATIC: 'Polygon',
+  SHIB: 'Shiba Inu',
+  LTC: 'Litecoin',
+  UNI: 'Uniswap',
+  ATOM: 'Cosmos',
+  XLM: 'Stellar',
+  ALGO: 'Algorand',
+  NEAR: 'NEAR Protocol',
+  APT: 'Aptos',
+  SUI: 'Sui',
+  ARB: 'Arbitrum',
+  OP: 'Optimism',
+  FIL: 'Filecoin',
+  AAVE: 'Aave',
+  GRT: 'The Graph',
+  SAND: 'The Sandbox',
+  MANA: 'Decentraland',
+  AXS: 'Axie Infinity',
+  CRO: 'Cronos',
+  TRX: 'TRON',
+} as const;
+
+// --- Fiat Utility Functions ---
+
 export function formatCurrency(amount: number, currencyCode: string): string {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -107,65 +144,38 @@ export function isValidCurrencyCode(code: string): boolean {
 
 export function getCurrencySymbol(currencyCode: string): string {
   const symbols: Record<string, string> = {
-    // --- G10 & Majors ---
-    USD: '$',
-    EUR: '€',
-    GBP: '£',
-    JPY: '¥',
-    AUD: 'A$',
-    CAD: 'C$',
-    CHF: 'CHF',
-    CNY: '¥',
-    INR: '₹',
-    NZD: 'NZ$',
-
-    // --- Europe ---
-    SEK: 'kr',
-    NOK: 'kr',
-    DKK: 'kr',
-    PLN: 'zł',
-    CZK: 'Kč',
-    HUF: 'Ft',
-    TRY: '₺',
-    RUB: '₽',
-    UAH: '₴',
-    ISK: 'kr',
-
-    // --- Asia & Pacific ---
-    SGD: 'S$',
-    HKD: 'HK$',
-    KRW: '₩',
-    TWD: 'NT$',
-    THB: '฿',
-    MYR: 'RM',
-    IDR: 'Rp',
-    PHP: '₱',
-    VND: '₫',
-    PKR: '₨',
-    ILS: '₪',
-
-    // --- Americas ---
-    MXN: '$',
-    BRL: 'R$',
-    ARS: '$',
-    CLP: '$',
-    COP: '$',
-    PEN: 'S/',
-    XCD: '$',
-    XCG: 'Cg', // New 2026 standard (Caribbean Guilder)
-
-    // --- Middle East & Africa ---
-    AED: 'د.إ',
-    SAR: '﷼',
-    ZAR: 'R',
-    EGP: 'E£',
-    NGN: '₦',
-    KES: 'KSh',
-    GHS: '₵',
-    ZWG: 'ZiG' // 2026 Gold-backed standard (Zimbabwe Gold)
+    USD: '$', EUR: '€', GBP: '£', JPY: '¥',
+    AUD: 'A$', CAD: 'C$', CHF: 'CHF', CNY: '¥', INR: '₹', NZD: 'NZ$',
+    SEK: 'kr', NOK: 'kr', DKK: 'kr', PLN: 'zł', CZK: 'Kč',
+    HUF: 'Ft', TRY: '₺', RUB: '₽', UAH: '₴', ISK: 'kr',
+    SGD: 'S$', HKD: 'HK$', KRW: '₩', TWD: 'NT$', THB: '฿',
+    MYR: 'RM', IDR: 'Rp', PHP: '₱', VND: '₫', PKR: '₨', ILS: '₪',
+    MXN: '$', BRL: 'R$', ARS: '$', CLP: '$', COP: '$',
+    PEN: 'S/', XCD: '$', XCG: 'Cg',
+    AED: 'د.إ', SAR: '﷼', ZAR: 'R', EGP: 'E£',
+    NGN: '₦', KES: 'KSh', GHS: '₵', ZWG: 'ZiG',
   };
 
-  // Logic to return the code itself if the symbol isn't mapped (fallback)
   return symbols[currencyCode.toUpperCase()] || currencyCode.toUpperCase();
 }
 
+// --- Crypto Utility Functions ---
+
+export function getCryptoSymbol(cryptoCode: string): string {
+  const symbols: Record<string, string> = {
+    BTC: '₿', ETH: 'Ξ', SOL: '◎', DOGE: 'Ð', XRP: '✕',
+    ADA: '₳', DOT: '●', LINK: '⬡', LTC: 'Ł', ATOM: '⚛',
+  };
+
+  return symbols[cryptoCode.toUpperCase()] || cryptoCode.toUpperCase();
+}
+
+export function formatCrypto(amount: number, cryptoCode: string): string {
+  const symbol = getCryptoSymbol(cryptoCode);
+  const decimals = amount < 1 ? 8 : amount < 100 ? 6 : 4;
+  return `${symbol}${amount.toFixed(decimals)}`;
+}
+
+export function isValidCryptoCode(code: string): boolean {
+  return /^[A-Z0-9]{2,10}$/i.test(code);
+}
