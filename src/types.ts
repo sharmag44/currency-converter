@@ -156,37 +156,82 @@ export interface CryptoConversionOptions {
   source?: 'google' | 'coinpaprika' | 'auto';
 }
 
-export type CryptoCode = keyof PopularCryptocurrencies | (string & {});
+export type CryptoCode = keyof typeof PopularCryptocurrencies | (string & {});
 
-export interface PopularCryptocurrencies {
-  BTC: 'Bitcoin';
-  ETH: 'Ethereum';
-  SOL: 'Solana';
-  BNB: 'BNB';
-  XRP: 'XRP';
-  ADA: 'Cardano';
-  DOGE: 'Dogecoin';
-  AVAX: 'Avalanche';
-  DOT: 'Polkadot';
-  LINK: 'Chainlink';
-  MATIC: 'Polygon';
-  SHIB: 'Shiba Inu';
-  LTC: 'Litecoin';
-  UNI: 'Uniswap';
-  ATOM: 'Cosmos';
-  XLM: 'Stellar';
-  ALGO: 'Algorand';
-  NEAR: 'NEAR Protocol';
-  APT: 'Aptos';
-  SUI: 'Sui';
-  ARB: 'Arbitrum';
-  OP: 'Optimism';
-  FIL: 'Filecoin';
-  AAVE: 'Aave';
-  GRT: 'The Graph';
-  SAND: 'The Sandbox';
-  MANA: 'Decentraland';
-  AXS: 'Axie Infinity';
-  CRO: 'Cronos';
-  TRX: 'TRON';
-}
+export const PopularCryptocurrencies = {
+  // --- Top Market / Core ---
+  BTC: 'Bitcoin',
+  ETH: 'Ethereum',
+  BNB: 'BNB',
+  XRP: 'XRP',
+  SOL: 'Solana',
+  ADA: 'Cardano',
+  DOGE: 'Dogecoin',
+  AVAX: 'Avalanche',
+  DOT: 'Polkadot',
+  TRX: 'TRON',
+  TON: 'Toncoin',
+
+  // --- Stablecoins ---
+  USDT: 'Tether',
+  USDC: 'USD Coin',
+  DAI: 'Dai',
+  FDUSD: 'First Digital USD',
+  TUSD: 'TrueUSD',
+
+  // --- Layer 1 / Infra ---
+  LINK: 'Chainlink',
+  MATIC: 'Polygon',
+  LTC: 'Litecoin',
+  XLM: 'Stellar',
+  ALGO: 'Algorand',
+  NEAR: 'NEAR Protocol',
+  ATOM: 'Cosmos',
+  ICP: 'Internet Computer',
+  HBAR: 'Hedera',
+  VET: 'VeChain',
+  EGLD: 'MultiversX',
+  XTZ: 'Tezos',
+  FLOW: 'Flow',
+  FIL: 'Filecoin',
+
+  // --- Layer 2 / Scaling ---
+  ARB: 'Arbitrum',
+  OP: 'Optimism',
+  STRK: 'Starknet',
+
+  // --- DeFi ---
+  UNI: 'Uniswap',
+  AAVE: 'Aave',
+  MKR: 'Maker',
+  SNX: 'Synthetix',
+  COMP: 'Compound',
+  CRV: 'Curve DAO Token',
+  LDO: 'Lido DAO',
+  GRT: 'The Graph',
+
+  // --- Gaming / Metaverse ---
+  SAND: 'The Sandbox',
+  MANA: 'Decentraland',
+  AXS: 'Axie Infinity',
+
+  // --- Meme / Community ---
+  SHIB: 'Shiba Inu',
+
+  // --- Exchange Tokens ---
+  CRO: 'Cronos',
+  OKB: 'OKB',
+  HT: 'Huobi Token',
+  KCS: 'KuCoin Token',
+
+  // --- Emerging / Trending ---
+  APT: 'Aptos',
+  SUI: 'Sui',
+  SEI: 'Sei',
+  TIA: 'Celestia',
+  PYTH: 'Pyth Network',
+  JUP: 'Jupiter',
+} as const;
+
+export type CryptoSymbol = keyof typeof PopularCryptocurrencies;
+export type CryptoName = typeof PopularCryptocurrencies[CryptoSymbol];
