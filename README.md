@@ -18,6 +18,11 @@ A robust, **100% free-of-cost** currency and cryptocurrency conversion library f
 npm install @sharmag44/currency-converter
 ```
 
+### 🌟 Native ES6 & Dual-Module Support
+This package is compiled with pure dual-module support. It works flawlessly out-of-the-box with both **modern ES6 environments** (like Vite, Next.js, and pure Node.js ES modules) and **legacy CommonJS setups**.
+
+Node.js will automatically detect your environment and serve the correct module type without any extra configuration.
+
 ---
 
 ## 💱 Currency Conversion
