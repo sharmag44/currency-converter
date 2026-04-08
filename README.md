@@ -22,7 +22,7 @@ paid subscriptions.
 ## 📦 Installation
 
 ```bash
-npm install currency-converter
+npm install @sharmag44/currency-converter
 ```
 
 ## 🎯 Quick Start
@@ -30,7 +30,7 @@ npm install currency-converter
 ### CommonJS (CJS)
 
 ```javascript
-const { convertCurrency } = require("currency-converter");
+const { convertCurrency } = require('@sharmag44/currency-converter');
 
 async function main() {
   const result = await convertCurrency("USD", "EUR", 100);
@@ -41,7 +41,7 @@ async function main() {
 ### ESModules (ESM)
 
 ```javascript
-import { convertCurrency } from "currency-converter";
+import { convertCurrency } from '@sharmag44/currency-converter';
 
 async function main() {
   const result = await convertCurrency("GBP", "JPY", 50);
