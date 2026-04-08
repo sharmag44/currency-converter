@@ -1,5 +1,5 @@
 {
-  "name": "currency-converter-scraper",
+  "name": "currency-converter",
   "version": "1.0.0",
   "description": "A lightweight npm package to retrieve latest currency conversion rates using Google scraping and alternative APIs",
   "main": "dist/cjs/index.js",
@@ -29,7 +29,7 @@
     "scraper",
     "finance"
   ],
-  "author": "Your Name",
+  "author": "sharmag44",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.1.3",
@@ -52,10 +52,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/currency-converter-scraper.git"
+    "url": "https://github.com/sharmag44/currency-converter.git"
   },
   "bugs": {
-    "url": "https://github.com/yourusername/currency-converter-scraper/issues"
+    "url": "https://github.com/sharmag44/currency-converter/issues"
   },
-  "homepage": "https://github.com/yourusername/currency-converter-scraper#readme"
+  "homepage": "https://github.com/sharmag44/currency-converter#readme"
 }
